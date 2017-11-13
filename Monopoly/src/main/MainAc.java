@@ -19,6 +19,8 @@ public class MainAc extends Canvas implements Runnable {
 	private Board board;
 	private Operations operations;
 	private MainMenu mainMenu;
+	private SetGameMenu setGameMenu;
+	private SetPlayer setPlayer;
 	BufferStrategy bs;
 	Graphics g;
 	public static Title title;
@@ -28,14 +30,13 @@ public class MainAc extends Canvas implements Runnable {
 //		Vi sætter og opretter vores variabler: 
 		width = 1280;
 		height = width/4 * 3;
-//		Vi opretter en KeyListener og en MouseListener 
-		this.addKeyListener(new Keys(this));
-		
 		
 		window = new Window(width, height, "Monopoly", this);
 		
 		board = new Board();
 		
+//		Vi opretter en KeyListener og en MouseListener 
+		this.addKeyListener(new Keys(this, board));
 		this.addMouseListener(new MouseEvents(board));
 		
 		operations = new Operations(board);
@@ -43,6 +44,10 @@ public class MainAc extends Canvas implements Runnable {
 		display = new Display(board, g);
 		
 		mainMenu = new MainMenu();
+		
+		setGameMenu = new SetGameMenu();
+		
+		setPlayer = new SetPlayer(board);
 		
 		title = Title.MainMenu;
 	
@@ -95,6 +100,10 @@ public class MainAc extends Canvas implements Runnable {
 			display.render(g, g2d);
 		}else if(title == Title.MainMenu){
 			mainMenu.render(g);
+		}else if(title == Title.SetGameMenu){
+			setGameMenu.render(g);
+		}else if(title == Title.SetPlayer){
+			setPlayer.render(g);
 		}
 		
 		

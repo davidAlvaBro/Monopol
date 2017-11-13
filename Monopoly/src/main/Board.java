@@ -10,7 +10,9 @@ public class Board {
 			"Coventry Street","Community Chest","Piccadilly","GO TO JAIL","Regent Street","Oxford Street","Community Chest","Bond Street",
 			"Liverpool St.","Chance","Park Lane","Super Tax","Mayfair"};
 	public Field[] fields = new Field[fieldNames.length];
-	public Player[] players = { new Player(1500, "Ginger", Color.red), new Player(1500, "Daniel", Color.green), new Player(2000, "David", Color.orange)};
+	public Player[] players;
+	private boolean createdPlayers = false;
+	private boolean createdAmountOfPlayers;
 	
 	public Board(){
 		FieldProperties temp;
@@ -33,8 +35,17 @@ public class Board {
 	}
 	
 	public void tick(){
-		for (int i = 0; i < players.length; i++) {
-			players[i].tick();
+		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){
+			players = new Player[Player.typedAmountOfPlayers];
+			for (int i = 0; i < Player.typedAmountOfPlayers - 1; i++) {
+				players[i] = new Player();
+			}
+			createdAmountOfPlayers = true;
+		}
+		if(createdPlayers){
+			for (int i = 0; i < players.length; i++) {
+				players[i].tick();
+			}	
 		}
 	}
 }

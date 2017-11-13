@@ -5,6 +5,7 @@ public class Operations {
 	public static int move = 0;
 	public static boolean canRollDice = true;
 	public static boolean buying = false;
+	public static boolean idiots = false;
 	private int tempTurn = turn, tempMove = move;
 	private Board board;
 	public static int copyOfTempTurn;

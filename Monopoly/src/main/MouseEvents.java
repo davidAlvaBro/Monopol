@@ -68,13 +68,27 @@ public class MouseEvents extends MouseAdapter{
 			
 		}else if(MainAc.title == Title.MainMenu){
 			if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= MainAc.height*5/26 && my <= MainAc.height*5/26 + MainAc.height/13*2){
-				MainAc.title = Title.Game;
+				MainAc.title = Title.SetGameMenu;
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 2*MainAc.height*5/26 && my <= 2*MainAc.height*5/26 + MainAc.height/13*2){
 				MainAc.title = Title.Game;
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 3*MainAc.height*5/26 && my <= 3*MainAc.height*5/26 + MainAc.height/13*2){
 				//Implement method
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 4*MainAc.height*5/26 && my <= 4*MainAc.height*5/26 + MainAc.height/13*2){
 				System.exit(2);
+			}
+			
+			
+		}else if(MainAc.title == Title.SetGameMenu){
+			if(mx >= MainAc.width/6 + MainAc.width*26/64 + MainAc.width*3/64 && mx <= MainAc.width/6 + MainAc.width*26/64 + MainAc.width*3/64 + MainAc.width*3/48 && my >= MainAc.height/4 && my <= MainAc.height/4 + MainAc.height/32){
+				if(Player.typedAmountOfPlayers < 5){
+					Player.typedAmountOfPlayers++;
+				}
+			}else if(mx >= MainAc.width/6 + MainAc.width*26/64 + MainAc.width*3/64 && mx <= MainAc.width/6 + MainAc.width*26/64 + MainAc.width*3/64 + MainAc.width*3/48 && my >= MainAc.height/4 + MainAc.height/32 && my <= MainAc.height/4 + MainAc.height/32 + MainAc.height/32){
+				if(Player.typedAmountOfPlayers > 2){
+					Player.typedAmountOfPlayers--;
+				}
+			}else if(mx >= MainAc.width*2/5 && mx <= MainAc.width*2/5 + MainAc.width/5 && my >= MainAc.height*3/4 && my <= MainAc.height*3/4 + MainAc.height/8){
+				MainAc.title = Title.SetPlayer;
 			}
 		}
 	

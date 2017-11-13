@@ -5,20 +5,19 @@ import java.util.LinkedList;
 
 public class Player {
 	public static int amountOfPlayers;
+	public static int typedAmountOfPlayers = 2;
 	private int playerNum, playerCash, playerValue, playerPlace;
 	private String playerName;
 	public LinkedList<Field> ownedFields = new LinkedList<Field>();
-	private Color playerColor;
+	private Color playerColor = Color.white;
 //	private Cards[] playerCards;
 	
-	public Player(int startCash, String playerName, Color playerColor){
+	public Player(){
 		Player.amountOfPlayers++;
 		this.playerNum = Player.amountOfPlayers;
-		this.playerCash = startCash;
-		this.playerName = playerName;
-		this.playerColor = playerColor;
+		this.playerCash = 1500;
+		this.playerName = "";
 		playerPlace = 0;
-		
 	}
 	
 
