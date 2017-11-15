@@ -35,7 +35,7 @@ public class Keys extends KeyAdapter{
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
 		
-		if(MainAc.title == Title.SetPlayer){
+		if(MainAc.title == Title.SetPlayer && board.players[SetPlayer.player -1].getPlayerName().length() < 6){
 			if(key == KeyEvent.VK_Q){
 				board.players[SetPlayer.player -1].setPlayerName(board.players[SetPlayer.player -1].getPlayerName() + "Q");
 			}

@@ -6,6 +6,8 @@ import java.util.LinkedList;
 public class Player {
 	public static int amountOfPlayers;
 	public static int typedAmountOfPlayers = 2;
+	public static LinkedList<Color> ownedColors = new LinkedList<Color>();
+	
 	private int playerNum, playerCash, playerValue, playerPlace;
 	private String playerName;
 	public LinkedList<Field> ownedFields = new LinkedList<Field>();
@@ -18,8 +20,13 @@ public class Player {
 		this.playerCash = 1500;
 		this.playerName = "";
 		playerPlace = 0;
+		ownedColors.add(this.playerColor);
 	}
 	
+	
+	public void creatingPlayersTick(){
+		ownedColors.set(playerNum - 1, playerColor);
+	}
 
 	public void tick(){
 		playerValue = 0;

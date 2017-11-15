@@ -1,5 +1,6 @@
 package main;
 
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -70,7 +71,9 @@ public class MouseEvents extends MouseAdapter{
 			if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= MainAc.height*5/26 && my <= MainAc.height*5/26 + MainAc.height/13*2){
 				MainAc.title = Title.SetGameMenu;
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 2*MainAc.height*5/26 && my <= 2*MainAc.height*5/26 + MainAc.height/13*2){
-				MainAc.title = Title.Game;
+				if(board.createdPlayers){
+					MainAc.title = Title.Game;
+				}
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 3*MainAc.height*5/26 && my <= 3*MainAc.height*5/26 + MainAc.height/13*2){
 				//Implement method
 			}else if(mx >= MainAc.width*1/3 && mx <= MainAc.width*1/3 + MainAc.width/3 && my >= 4*MainAc.height*5/26 && my <= 4*MainAc.height*5/26 + MainAc.height/13*2){
@@ -90,8 +93,50 @@ public class MouseEvents extends MouseAdapter{
 			}else if(mx >= MainAc.width*2/5 && mx <= MainAc.width*2/5 + MainAc.width/5 && my >= MainAc.height*3/4 && my <= MainAc.height*3/4 + MainAc.height/8){
 				MainAc.title = Title.SetPlayer;
 			}
+			
+			
+		}else if(MainAc.title == Title.SetPlayer){
+			if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*0/16 && my <= MainAc.width*0/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.blue);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*1/16 && my <= MainAc.width*1/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.cyan);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*2/16 && my <= MainAc.width*2/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.gray);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*3/16 && my <= MainAc.width*3/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.LIGHT_GRAY);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*4/16 && my <= MainAc.width*4/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.white);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*5/16 && my <= MainAc.width*5/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.pink);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*6/16 && my <= MainAc.width*6/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.magenta);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*7/16 && my <= MainAc.width*7/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.red);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*8/16 && my <= MainAc.width*8/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.orange);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*9/16 && my <= MainAc.width*9/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.yellow);
+				
+			}else if(mx >= MainAc.width*15/16 && mx <= MainAc.width && my >= MainAc.width*10/16 && my <= MainAc.width*10/16 + MainAc.width/16){
+				board.players[SetPlayer.player - 1].setPlayerColor(Color.green);
+				
+			}else if(mx >= MainAc.width*2/5 && mx <= MainAc.width*2/5 + MainAc.width/5 && my >= MainAc.height*3/4 && my <= MainAc.height*3/4 + MainAc.height/8 && !isColorOwned() && board.players[SetPlayer.player - 1].getPlayerName().length() != 0){
+				if(SetPlayer.player < Player.typedAmountOfPlayers){
+					SetPlayer.player++;
+				}else{
+					MainAc.title = Title.Game;
+				}
+			}			
 		}
-	
 	}
 	
 	public void mouseReleased(MouseEvent e){
@@ -103,5 +148,20 @@ public class MouseEvents extends MouseAdapter{
 			Operations.move++;
 			Operations.canRollDice = false;
 		}
+	}
+	
+	public boolean isColorOwned(){
+		int b = 0;
+		for (int i = 0; i < Player.ownedColors.size(); i++) {
+			if(board.players[SetPlayer.player - 1].getPlayerColor() == Player.ownedColors.get(i)){
+				b++;
+			}
+		}
+		if(b >= 2){
+			return true;
+		}else{
+			return false;
+		}
+		
 	}
 }

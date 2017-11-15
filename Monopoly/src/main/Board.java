@@ -11,7 +11,7 @@ public class Board {
 			"Liverpool St.","Chance","Park Lane","Super Tax","Mayfair"};
 	public Field[] fields = new Field[fieldNames.length];
 	public Player[] players;
-	private boolean createdPlayers = false;
+	public boolean createdPlayers = false;
 	private boolean createdAmountOfPlayers;
 	
 	public Board(){
@@ -37,11 +37,17 @@ public class Board {
 	public void tick(){
 		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){
 			players = new Player[Player.typedAmountOfPlayers];
-			for (int i = 0; i < Player.typedAmountOfPlayers - 1; i++) {
+			for (int i = 0; i < Player.typedAmountOfPlayers; i++) {
 				players[i] = new Player();
 			}
 			createdAmountOfPlayers = true;
 		}
+		if(MainAc.title == Title.SetPlayer && !createdPlayers){
+			for (int i = 0; i < players.length; i++) {
+				players[i].creatingPlayersTick();
+			}
+		}
+		
 		if(createdPlayers){
 			for (int i = 0; i < players.length; i++) {
 				players[i].tick();
