@@ -11,8 +11,10 @@ public class Board {
 			"Liverpool St.","Chance","Park Lane","Super Tax","Mayfair"};
 	public Field[] fields = new Field[fieldNames.length];
 	public Player[] players;
+	private Player[] tempPlayers;
 	public boolean createdPlayers = false;
 	private boolean createdAmountOfPlayers;
+	public boolean[] showFields = new boolean[fieldNames.length];
 	
 	public Board(){
 		FieldProperties temp;
@@ -32,16 +34,25 @@ public class Board {
 			}
 			fields[i] = new Field(i*10 + 50, i*2+10, fieldNames[i], temp);
 		}
+		
+		for (int i = 0; i < showFields.length; i++) {
+			showFields[i] = false;
+		}
 	}
 	
 	public void tick(){
-		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){
+		if(Player.amountOfPlayers == 1){
+			MainAc.title = Title.WinnerScreen;
+		}
+		
+		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){ 
 			players = new Player[Player.typedAmountOfPlayers];
 			for (int i = 0; i < Player.typedAmountOfPlayers; i++) {
 				players[i] = new Player();
 			}
 			createdAmountOfPlayers = true;
 		}
+		
 		if(MainAc.title == Title.SetPlayer && !createdPlayers){
 			for (int i = 0; i < players.length; i++) {
 				players[i].creatingPlayersTick();
@@ -51,7 +62,89 @@ public class Board {
 		if(createdPlayers){
 			for (int i = 0; i < players.length; i++) {
 				players[i].tick();
+				
+				if(players[i].getPlayerValue() <= 0){
+					System.out.println("SHIIIIIT YOU DIDEDEDDED");
+					for (int j = 0; j < players[i].ownedFields.size(); j++) {
+						players[i].ownedFields.get(j).setHouseAmounts(0);
+						players[i].ownedFields.get(j).setMortgaged(false);
+						players[i].ownedFields.get(j).setOwnedBy("No one");
+						players[i].ownedFields.get(j).setOwned(false);
+						
+					}
+					
+					for (int j = 0; j < players.length; j++) {
+						System.out.println(j + " The player number " + players[j].getPlayerName());
+					}
+					
+					for (int j = 0; j < players.length; j++) {
+						if(j > i){
+							players[j].setPlayerNum(players[j].getPlayerNum() - 1);
+						}
+					}
+					
+					tempPlayers = new Player[players.length - 1];
+					for (int j = 0; j < tempPlayers.length; j++) {
+						tempPlayers[j] = players[j];
+					}
+					
+					for (int j = i; j < players.length - 1; j++) {
+						tempPlayers[j] = players[j + 1];
+					}
+					
+					players = tempPlayers;
+					System.out.println("");
+					for (int j = 0; j < players.length; j++) {
+						System.out.println(j + " The player number " + players[j].getPlayerName());
+					}
+
+					Player.amountOfPlayers--;
+					
+					if(Operations.turn == 0){
+						Operations.turn = Player.amountOfPlayers;
+						Operations.tempTurn = Player.amountOfPlayers;
+					}
+					Operations.turn--;
+					Operations.tempTurn--;
+					
+					
+				}
 			}	
 		}
 	}
+	
+	public boolean shouldShowField(){
+		for (int i = 0; i <showFields.length; i++) {
+			if(showFields[i]){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void landedOn(){
+		if(this.fields[this.players[Operations.turn].getPlayerPlace()].isOwned()){
+			for (int i = 0; i < this.players.length; i++) {
+				if(this.fields[this.players[Operations.turn].getPlayerPlace()].getOwnedBy().equals(this.players[i].getPlayerName())){
+					this.players[i].setPlayerCash(this.players[i].getPlayerCash() + this.fields[this.players[Operations.turn].getPlayerPlace()].getPriceLandedOn());
+					this.players[Operations.turn].setPlayerCash(this.players[Operations.turn].getPlayerCash() - this.fields[this.players[Operations.turn].getPlayerPlace()].getPriceLandedOn());
+				}
+			}
+		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Chance){
+			//FYR OP FOR EN CHANCEN
+		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.CommunityChest){
+			//FYR OP FOR EN COMMUNITYCHEST
+		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Taxes){
+			
+			if(this.players[Operations.turn].getPlayerPlace() == 4){
+				this.players[Operations.turn].setPlayerCash(this.players[Operations.turn].getPlayerCash() - this.players[Operations.turn].getPlayerValue()*1/10);
+			}else if(this.players[Operations.turn].getPlayerPlace() == 38){
+				this.players[Operations.turn].setPlayerCash(this.players[Operations.turn].getPlayerCash() - this.players[Operations.turn].getPlayerValue()*2/10);
+			}
+		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Corners){
+			//FYR OP FOR EN FUUUUUUCK DER SKAL SKE MEGET HER.......
+		}
+	}
+	
+	
 }

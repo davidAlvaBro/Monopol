@@ -9,6 +9,7 @@ import java.awt.image.BufferStrategy;
 public class MainAc extends Canvas implements Runnable {
 //	Vi opretter en højde og en bredde til vores JFrame, de skal være public static så vi kan bruge dem alle steder. 
 	public static int height, width;
+	public static final int passingStart = 200;
 //	Vi laver en thread til at kører vores program i, vi laver en boolean der siger om programmet kører 
 //	og vi laver et inctence af vores display for at kunne kører dens render funktion i vores mainAc render funktion
 //	Vi laver vores vindu
@@ -21,6 +22,7 @@ public class MainAc extends Canvas implements Runnable {
 	private MainMenu mainMenu;
 	private SetGameMenu setGameMenu;
 	private SetPlayer setPlayer;
+	private WinnerScreen winnerScreen;
 	BufferStrategy bs;
 	Graphics g;
 	public static Title title;
@@ -50,6 +52,8 @@ public class MainAc extends Canvas implements Runnable {
 		setPlayer = new SetPlayer(board);
 		
 		title = Title.MainMenu;
+		
+		winnerScreen = new WinnerScreen(board);
 	
 	}
 	
@@ -96,7 +100,7 @@ public class MainAc extends Canvas implements Runnable {
 		g.fillRect(0, 0, width, height);
 		
 //		Vi kalder det vi render fra display funktionen. 
-		if(title == Title.Game || title == Title.ActionMenu){
+		if(title == Title.Game || title == Title.ActionMenu || title == Title.MeMenu || title == Title.ShowMyProperties || title == Title.BuyHouse){
 			display.render(g, g2d);
 		}else if(title == Title.MainMenu){
 			mainMenu.render(g);
@@ -104,6 +108,8 @@ public class MainAc extends Canvas implements Runnable {
 			setGameMenu.render(g);
 		}else if(title == Title.SetPlayer){
 			setPlayer.render(g);
+		}else if(title == Title.WinnerScreen){
+			winnerScreen.render(g);
 		}
 		
 		

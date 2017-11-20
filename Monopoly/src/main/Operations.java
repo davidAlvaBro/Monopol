@@ -2,11 +2,12 @@ package main;
 
 public class Operations {
 	public static int turn = 0;
+	public static int tempTurn = turn;
 	public static int move = 0;
 	public static boolean canRollDice = true;
 	public static boolean buying = false;
 	public static boolean idiots = false;
-	private int tempTurn = turn, tempMove = move;
+	private int tempMove = move;
 	private Board board;
 	public static int copyOfTempTurn;
 	
@@ -38,8 +39,10 @@ public class Operations {
 			board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() + Dice.diceLeft + Dice.diceRight);
 			if(board.players[tempTurn].getPlayerPlace() > board.fields.length - 1){
 				board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() - board.fields.length);
-			}
+				board.players[tempTurn].setPlayerCash(board.players[tempTurn].getPlayerCash() + MainAc.passingStart);
+			}////////////////////////
 			tempMove = move;
+			board.landedOn();
 		}
 		tempTurn = turn;
 	}

@@ -5,5 +5,9 @@ public enum Title {
 	ActionMenu(),
 	SetGameMenu(),
 	SetPlayer(),
+	MeMenu(),
+	ShowMyProperties(),
+	WinnerScreen(),
+	BuyHouse(),
 	Game;
 }

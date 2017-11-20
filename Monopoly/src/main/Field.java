@@ -1,28 +1,119 @@
 package main;
 
+import java.awt.Color;
+
 public class Field {
-	private int price, priceForHouse, priceLandedOn, mortgagePrice, buyHouse, houseAmounts;
+	private static int amountOfFields;
+	private int price, priceForHouse, priceLandedOn, mortgagePrice, houseAmounts;
 	private String propertyName, ownedBy;
 	private boolean owned, mortgaged, buyable = false;
+	public Color color; 
 	FieldProperties typeOfField;
 	
 	public Field(int price, int priceForHouse, String propertyName, FieldProperties typeOfField){
-		this.price = price;
-		this.priceForHouse = priceForHouse;
-		this.propertyName = propertyName;
 		this.typeOfField = typeOfField;
 		
-		priceLandedOn = price/10;
-		mortgagePrice = price/2;
-		buyHouse = priceForHouse/4;
+		if(typeOfField == FieldProperties.NormalField){
+			if(amountOfFields <= 1){
+				//brown
+				color = new Color(139, 69, 19);
+				this.price = 60;
+				this.priceForHouse = 50;
+				amountOfFields++;
+				
+			}else if(amountOfFields <= 4){
+				//light blue
+				color = new Color(0, 158, 238);
+				this.price = 100;
+				this.priceForHouse = 50;
+				if(amountOfFields == 4){
+					this.price = 120;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 7){
+				//pink/magenta
+				color = Color.magenta;
+				this.price = 140;
+				this.priceForHouse = 100;
+				if(amountOfFields == 7){
+					this.price = 140;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 10){
+				//orange
+				color = new Color(255, 140, 0);
+				this.price = 180;
+				this.priceForHouse = 100;
+				if(amountOfFields == 10){
+					this.price = 200;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 13){
+				//red
+				color = new Color(215, 54, 54);
+				this.price = 220;
+				this.priceForHouse = 150;
+				if(amountOfFields == 13){
+					this.price = 240;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 16){
+				//Yellow
+				color = Color.yellow;
+				this.price = 260;
+				this.priceForHouse = 150;
+				if(amountOfFields == 16){
+					this.price = 280;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 19){
+				//green
+				color = new Color(34, 139, 34);
+				this.price = 300;
+				this.priceForHouse = 200;
+				if(amountOfFields == 19){
+					this.price = 320;
+				}
+				amountOfFields++;
+			}else if(amountOfFields <= 21){
+				//blue
+				color = new Color(0,0,139);
+				this.priceForHouse = 200;
+				if(amountOfFields == 20){
+					this.price = 350;
+				}else{
+					this.price = 400;
+				}
+				amountOfFields++;
+			}
+			this.priceLandedOn = this.price/10 - 4;
+			this.mortgagePrice = this.price/2;
+			
+		}else if(typeOfField == FieldProperties.Chance){
+			color = Color.black;
+		}else if(typeOfField == FieldProperties.CommunityChest){
+			color = new Color(218, 165, 32);
+		}else if(typeOfField == FieldProperties.Taxes){
+			color = Color.red;
+		}else if(typeOfField == FieldProperties.TrainStation){
+			color = new Color(77, 77, 77);
+			this.price = 200;
+			this.priceLandedOn = 25;
+			this.mortgagePrice = this.price/2;
+		}
+	
+		this.propertyName = propertyName;
 		
 		ownedBy = "No one";
 		owned = false;
 		mortgaged = false;
+		
 		if(typeOfField == FieldProperties.NormalField || typeOfField == FieldProperties.TrainStation){
 			buyable = true;
-		}
+		}	
+		
 	}
+	
 
 	public int getPrice() {
 		return price;
@@ -54,14 +145,6 @@ public class Field {
 
 	public void setMortgagePrice(int mortgagePrice) {
 		this.mortgagePrice = mortgagePrice;
-	}
-
-	public int getBuyHouse() {
-		return buyHouse;
-	}
-
-	public void setBuyHouse(int buyHouse) {
-		this.buyHouse = buyHouse;
 	}
 
 	public int getHouseAmounts() {

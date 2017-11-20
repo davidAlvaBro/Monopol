@@ -58,30 +58,34 @@ public class Display {
 				
 			}else if(i > 0 && i < 10){
 				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
+				//Drawing the field color
+				g.setColor(board.fields[i].color);
+				g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
+				g.setColor(Color.white);
 				
-				if(board.fields[i].typeOfField == FieldProperties.NormalField ){
-					g.setColor(Color.cyan);
-					g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.TrainStation){
-					g.setColor(Color.blue);
-					g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Taxes){
-					g.setColor(Color.red);
-					g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
-					g.setColor(Color.green);
-					g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Chance){
+				//if chance
+				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
+					g2d.setColor(new Color(159, 0, 228));
 					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
 					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
 				}
 				
-				g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY + 20);
+				// if owned
+				if(board.fields[i].isOwned()){
+					for (int j = 0; j < board.players.length; j++) {
+						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+							g.setColor(board.players[j].getPlayerColor());
+							g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+							g.setColor(Color.white);
+							g.drawRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+						}
+					}
+				}
+				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
+					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY + 20);
+				}
 				feltX += stanFelt;
 				
 			}else if(i == 10){
@@ -97,32 +101,36 @@ public class Display {
 				
 			}else if(i > 10 && i < 20){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt);
+				//Drawing the field color
+				g.setColor(board.fields[i].color);
+				g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
+				g.setColor(Color.white);
 				
-				if(board.fields[i].typeOfField == FieldProperties.NormalField ){
-					g.setColor(Color.cyan);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.TrainStation){
-					g.setColor(Color.blue);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Taxes){
-					g.setColor(Color.red);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
-					g.setColor(Color.green);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Chance){
+				// if chance
+				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
+					g2d.setColor(new Color(159, 0, 228));
 					g2d.rotate(Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
 					g2d.drawString("?", feltX + stanFelt*2/5, feltY - 5);
 					g2d.rotate(-Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
 					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
 				}
 				
-				g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
+				//if owned
+				if(board.fields[i].isOwned()){
+					for (int j = 0; j < board.players.length; j++) {
+						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+							g.setColor(board.players[j].getPlayerColor());
+							g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+							g.setColor(Color.white);
+							g.drawRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+						}
+					}
+				}
+				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
+					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
+				}
 				feltY += stanFelt;
 				
 			}else if(i == 20){
@@ -139,57 +147,68 @@ public class Display {
 			}else if(i > 20 && i < 29){
 				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
 				
-				if(board.fields[i].typeOfField == FieldProperties.NormalField ){
-					g.setColor(Color.cyan);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.TrainStation){
-					g.setColor(Color.blue);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Taxes){
-					g.setColor(Color.red);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
-					g.setColor(Color.green);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Chance){
+				//Drawing the field color
+				g.setColor(board.fields[i].color);
+				g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
+				g.setColor(Color.white);
+				
+				//if chance
+				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
+					g2d.setColor(new Color(159, 0, 228));
 					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
 					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
 				}
 				
-				g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY + 20);
+				//if owned
+				if(board.fields[i].isOwned()){
+					for (int j = 0; j < board.players.length; j++) {
+						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+							g.setColor(board.players[j].getPlayerColor());
+							g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+							g.setColor(Color.white);
+							g.drawRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+						}
+					}
+				}
+				
+				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
+					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
+				}
 				feltX -= stanFelt;
 				
 			}else if(i == 29){
 				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
-				
-				if(board.fields[i].typeOfField == FieldProperties.NormalField ){
-					g.setColor(Color.cyan);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.TrainStation){
-					g.setColor(Color.blue);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Taxes){
-					g.setColor(Color.red);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
-					g.setColor(Color.green);
-					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Chance){
+				//Drawing the field color
+				g.setColor(board.fields[i].color);
+				g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
+				g.setColor(Color.white);
+					
+				//if chance
+				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
+					g2d.setColor(new Color(159, 0, 228));
 					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
 					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
 				}
 				
-				g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY + 20);
+				//if owned
+				if(board.fields[i].isOwned()){
+					for (int j = 0; j < board.players.length; j++) {
+						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+							g.setColor(board.players[j].getPlayerColor());
+							g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+							g.setColor(Color.white);
+							g.drawRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+						}
+					}
+				}
+				
+				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
+					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
+				}
 				feltX -= stanFelt * 2;
 				
 			}else if(i == 30){
@@ -205,32 +224,38 @@ public class Display {
 				
 			}else if(i > 30 && i < 40){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt);
+				//Drawing the field color
+				g.setColor(board.fields[i].color);
+				g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
+				g.setColor(Color.white);
 				
-				if(board.fields[i].typeOfField == FieldProperties.NormalField ){
-					g.setColor(Color.cyan);
-					g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.TrainStation){
-					g.setColor(Color.blue);
-					g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Taxes){
-					g.setColor(Color.red);
-					g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
-					g.setColor(Color.green);
-					g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-					g.setColor(Color.white);
-				}else if(board.fields[i].typeOfField == FieldProperties.Chance){
+				//If Chance
+				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
+					g2d.setColor(new Color(159, 0, 228));
 					g2d.rotate(-Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.drawString("?", feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.rotate(Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
 				}
 				
-				g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY + 20);
+				//If owned
+				if(board.fields[i].isOwned()){
+					for (int j = 0; j < board.players.length; j++) {
+						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+							g.setColor(board.players[j].getPlayerColor());
+							g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+							g.setColor(Color.white);
+							g.drawRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
+						}
+					}
+				}
+				
+				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
+					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
+				}
+				
 				feltY -= stanFelt;
 			}
 		}
@@ -249,17 +274,53 @@ public class Display {
 		g.setFont(dice);
 		g.drawString("Roll the dice", MainAc.width/4 + 66*stanFelt/8 + 15, 15*stanFelt/4 + 30);
 		
+		for (int j = 0; j < board.fields.length; j++) {
+			for (int k = 0; k < board.fields[j].getHouseAmounts(); k++) {
+				for (int l = 0; l < board.players.length; l++) {
+					if(board.players[l].getPlayerName().equals(board.fields[j].getOwnedBy())){
+						g.setColor(board.players[l].getPlayerColor());
+					}
+				}
+				
+				getFieldCorner(j);
+				g.fillRect(playerX + k*stanFelt/5, playerY, stanFelt/5, stanFelt/5);
+				g.setColor(Color.white);
+				g.drawRect(playerX + k*stanFelt/5, playerY, stanFelt/5, stanFelt/5);
+			}
+		}
+		
 		for (int j = 0; j < board.players.length; j++) {
 			peopleOnField[board.players[j].getPlayerPlace()]++;
 			g.setColor(board.players[j].getPlayerColor());
 			getFieldCorner(board.players[j].getPlayerPlace());
 			g.fillRect(playerX, playerY, stanFelt/4, stanFelt/4);	
+			g.setColor(Color.white);
+			g.drawRect(playerX, playerY, stanFelt/4, stanFelt/4);
 		}
 		
 		for (int j = 0; j < board.players.length; j++) {
 			peopleOnField[board.players[j].getPlayerPlace()]--;	
 		}
 		
+		if(board.shouldShowField()){
+			for (int j = 0; j < board.fields.length; j++) {
+				if(board.showFields[j]){
+					g.setColor(Color.black);
+					g.fillRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+					g.setColor(Color.white);
+					g.drawRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+					g.drawString(board.fields[j].getPropertyName(), MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 40);
+					g.drawString("" + j, MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 100);
+					if(board.fields[j].isOwned()){
+						g.drawString("This Field Is Owned By " + board.fields[j].getOwnedBy(), MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 160);
+					}
+					
+					if(board.fields[j].isBuyable() && !board.fields[j].isOwned()){
+						g.drawString("This Field is Buyable", MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 220);
+					}
+				}
+			}
+		}
 	}
 	
 	public void getFieldCorner(int numField){

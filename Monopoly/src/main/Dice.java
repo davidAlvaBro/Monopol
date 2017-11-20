@@ -12,6 +12,9 @@ public class Dice {
 		diceLeft = r.nextInt(6) + 1;
 		diceRight = r.nextInt(6) + 1;
 		
+//		diceLeft = 2;
+//		diceRight = 2;
+		
 		
 	}
 }
