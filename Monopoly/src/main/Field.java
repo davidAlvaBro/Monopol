@@ -3,7 +3,9 @@ package main;
 import java.awt.Color;
 
 public class Field {
+	public static final double houseFactor = 1.82;
 	private static int amountOfFields;
+	private int stanPrice;
 	private int price, priceForHouse, priceLandedOn, mortgagePrice, houseAmounts;
 	private String propertyName, ownedBy;
 	private boolean owned, mortgaged, buyable = false;
@@ -88,6 +90,7 @@ public class Field {
 			}
 			this.priceLandedOn = this.price/10 - 4;
 			this.mortgagePrice = this.price/2;
+			this.stanPrice = this.priceLandedOn;
 			
 		}else if(typeOfField == FieldProperties.Chance){
 			color = Color.black;
@@ -100,6 +103,7 @@ public class Field {
 			this.price = 200;
 			this.priceLandedOn = 25;
 			this.mortgagePrice = this.price/2;
+			this.stanPrice = this.priceLandedOn;
 		}
 	
 		this.propertyName = propertyName;
@@ -111,9 +115,28 @@ public class Field {
 		if(typeOfField == FieldProperties.NormalField || typeOfField == FieldProperties.TrainStation){
 			buyable = true;
 		}	
-		
 	}
 	
+
+	public int getStanPrice() {
+		return stanPrice;
+	}
+
+
+	public void setStanPrice(int stanPrice) {
+		this.stanPrice = stanPrice;
+	}
+
+
+	public Color getColor() {
+		return color;
+	}
+
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+
 
 	public int getPrice() {
 		return price;

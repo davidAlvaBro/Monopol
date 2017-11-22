@@ -8,7 +8,7 @@ public class Menu {
 	int sFMenu;
 	private Font leftMenuFont = new Font("arial", 1, 48), playerNameFont = new Font("arial", 1, 24), actionMenuFont = new Font("arial", 1, 32), tileFont = new Font("arial", 1, 18);
 	private Board board;
-	private int propertiesDistance = MainAc.height/7 + 35;
+	private int propertiesDistance = MainAc.height/7;
 
 	public Menu(Board board) {
 		this.board = board;
@@ -26,13 +26,17 @@ public class Menu {
 			for (int i = 0; i < board.fields.length; i++) {
 				if(board.fields[i].isOwned()){
 					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
 						g.setFont(tileFont);
-						g.drawString(board.fields[i].getPropertyName(), 0, propertiesDistance);
+						g.setColor(board.fields[i].color);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
+						g.setColor(Color.white);
+						g.drawString("" + board.fields[i].getPriceForHouse(), MainAc.width/4 - 50, propertiesDistance + 20);
 						propertiesDistance += MainAc.height * 5/7/26;
 						g.setFont(leftMenuFont);
 					}
 				}
-			}propertiesDistance = MainAc.height/7 + 35;
+			}propertiesDistance = MainAc.height/7;
 			
 			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
 			
@@ -40,25 +44,26 @@ public class Menu {
 			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
 			
 		}else if(MainAc.title == Title.BuyHouse){
+			//Lav det oven over til det samme som det her. Med firkanter om
 			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
 			g.setColor(board.players[Operations.turn].getPlayerColor());
 			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
 			g.setColor(Color.white);
 			
 			for (int i = 0; i < board.fields.length; i++) {
-				if(board.fields[i].isOwned()){
+				if(board.fields[i].isOwned() && board.fields[i].typeOfField == FieldProperties.NormalField){
 					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
-						g.drawRect(0, propertiesDistance - 35, MainAc.width/4 - 20, MainAc.height*5/7/26);
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
 						g.setFont(tileFont);
 						g.setColor(board.fields[i].color);
-						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance - 15);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
 						g.setColor(Color.white);
-						g.drawString("" + board.fields[i].getPriceForHouse(), MainAc.width/4 - 50, propertiesDistance - 15);
+						g.drawString("" + board.fields[i].getPriceForHouse(), MainAc.width/4 - 50, propertiesDistance + 20);
 						propertiesDistance += MainAc.height * 5/7/26;
 						g.setFont(leftMenuFont);
 					}
 				}
-			}propertiesDistance = MainAc.height/7 + 35;
+			}propertiesDistance = MainAc.height/7;
 			
 			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
 			

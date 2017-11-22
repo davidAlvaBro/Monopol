@@ -67,6 +67,7 @@ public class Board {
 					System.out.println("SHIIIIIT YOU DIDEDEDDED");
 					for (int j = 0; j < players[i].ownedFields.size(); j++) {
 						players[i].ownedFields.get(j).setHouseAmounts(0);
+						players[i].ownedFields.get(j).setPriceLandedOn(players[i].ownedFields.get(j).getStanPrice());
 						players[i].ownedFields.get(j).setMortgaged(false);
 						players[i].ownedFields.get(j).setOwnedBy("No one");
 						players[i].ownedFields.get(j).setOwned(false);

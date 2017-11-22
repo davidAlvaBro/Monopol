@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 public class Display {
-	private int feltX, feltY, stanFelt, playerX, playerY;
+	private int feltX, feltY, stanFelt, playerX, playerY, showFields;
 	private int[] peopleOnField;
 	private Font dice = new Font("arial", 1, 20), rolls = new Font("arial", 1, 55);
 	private Board board;
@@ -59,15 +59,27 @@ public class Display {
 			}else if(i > 0 && i < 10){
 				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
 				//Drawing the field color
-				g.setColor(board.fields[i].color);
-				g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
-				g.setColor(Color.white);
+				if(board.fields[i].typeOfField == FieldProperties.NormalField || board.fields[i].typeOfField == FieldProperties.TrainStation || board.fields[i].typeOfField == FieldProperties.Taxes){
+					g.setColor(board.fields[i].color);
+					g.fillRect(feltX + 1, feltY + 2 + 2*4*stanFelt/5, stanFelt - 1, stanFelt * 2/5 - 1);
+					g.setColor(Color.white);
+				}
+				
 				
 				//if chance
 				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
 					g2d.setColor(new Color(159, 0, 228));
 					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
+					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
+				}
+				
+				//if community chest
+				if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
+					g2d.setFont(new Font("arial", 1, 110));
+					g2d.setColor(board.fields[i].color);
+					g2d.drawString("C", feltX - 5, feltY + stanFelt*5/3);
 					g2d.setFont(stanFont);
 					g2d.setColor(Color.magenta);
 				}
@@ -102,9 +114,12 @@ public class Display {
 			}else if(i > 10 && i < 20){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt);
 				//Drawing the field color
-				g.setColor(board.fields[i].color);
-				g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-				g.setColor(Color.white);
+				if(board.fields[i].typeOfField == FieldProperties.NormalField || board.fields[i].typeOfField == FieldProperties.TrainStation || board.fields[i].typeOfField == FieldProperties.Taxes){
+					g.setColor(board.fields[i].color);
+					g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
+					g.setColor(Color.white);
+				}
+				
 				
 				// if chance
 				if(board.fields[i].typeOfField == FieldProperties.Chance){
@@ -112,6 +127,17 @@ public class Display {
 					g2d.setColor(new Color(159, 0, 228));
 					g2d.rotate(Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
 					g2d.drawString("?", feltX + stanFelt*2/5, feltY - 5);
+					g2d.rotate(-Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
+					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
+				}
+				
+				//if community chest
+				if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
+					g2d.setFont(new Font("arial", 1, 110));
+					g2d.setColor(board.fields[i].color);
+					g2d.rotate(Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
+					g2d.drawString("C", feltX + stanFelt*2/5, feltY - 5);
 					g2d.rotate(-Math.PI/2, feltX + stanFelt*2/5, feltY - 5);
 					g2d.setFont(stanFont);
 					g2d.setColor(Color.magenta);
@@ -144,19 +170,31 @@ public class Display {
 				
 				feltX -= stanFelt;
 				
-			}else if(i > 20 && i < 29){
+			}else if(i > 20 && i < 30){
 				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
 				
 				//Drawing the field color
-				g.setColor(board.fields[i].color);
-				g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-				g.setColor(Color.white);
+				if(board.fields[i].typeOfField == FieldProperties.NormalField || board.fields[i].typeOfField == FieldProperties.TrainStation || board.fields[i].typeOfField == FieldProperties.Taxes){
+					g.setColor(board.fields[i].color);
+					g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
+					g.setColor(Color.white);
+				}
+				
 				
 				//if chance
 				if(board.fields[i].typeOfField == FieldProperties.Chance){
 					g2d.setFont(monopolFont);
 					g2d.setColor(new Color(159, 0, 228));
 					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
+					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
+				}
+				
+				//if community chest
+				if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
+					g2d.setFont(new Font("arial", 1, 110));
+					g2d.setColor(board.fields[i].color);
+					g2d.drawString("C", feltX - 5, feltY + stanFelt*5/3);
 					g2d.setFont(stanFont);
 					g2d.setColor(Color.magenta);
 				}
@@ -178,38 +216,9 @@ public class Display {
 				}
 				feltX -= stanFelt;
 				
-			}else if(i == 29){
-				g.drawRect(feltX, feltY, stanFelt, stanFelt * 2);
-				//Drawing the field color
-				g.setColor(board.fields[i].color);
-				g.fillRect(feltX + 1, feltY + 1, stanFelt - 1, stanFelt * 2/5 - 1);
-				g.setColor(Color.white);
-					
-				//if chance
-				if(board.fields[i].typeOfField == FieldProperties.Chance){
-					g2d.setFont(monopolFont);
-					g2d.setColor(new Color(159, 0, 228));
-					g2d.drawString("?", feltX - 5, feltY + stanFelt*5/3);
-					g2d.setFont(stanFont);
-					g2d.setColor(Color.magenta);
+				if(i == 29){
+					feltX -= stanFelt;
 				}
-				
-				//if owned
-				if(board.fields[i].isOwned()){
-					for (int j = 0; j < board.players.length; j++) {
-						if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
-							g.setColor(board.players[j].getPlayerColor());
-							g.fillRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
-							g.setColor(Color.white);
-							g.drawRect(feltX + 1, feltY + 1, stanFelt * 2/5 - 1, stanFelt * 2/5 - 1);
-						}
-					}
-				}
-				
-				if(board.fields[i].isBuyable() && !board.fields[i].isOwned()){
-					g2d.drawString("" + board.fields[i].getPrice(), feltX, feltY+ 20);
-				}
-				feltX -= stanFelt * 2;
 				
 			}else if(i == 30){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt * 2);
@@ -225,9 +234,12 @@ public class Display {
 			}else if(i > 30 && i < 40){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt);
 				//Drawing the field color
-				g.setColor(board.fields[i].color);
-				g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
-				g.setColor(Color.white);
+				if(board.fields[i].typeOfField == FieldProperties.NormalField || board.fields[i].typeOfField == FieldProperties.TrainStation || board.fields[i].typeOfField == FieldProperties.Taxes){
+					g.setColor(board.fields[i].color);
+					g.fillRect(feltX + 2 + 2*4*stanFelt/5, feltY + 1, stanFelt * 2/5 - 1, stanFelt - 1);
+					g.setColor(Color.white);
+				}
+				
 				
 				//If Chance
 				if(board.fields[i].typeOfField == FieldProperties.Chance){
@@ -235,6 +247,17 @@ public class Display {
 					g2d.setColor(new Color(159, 0, 228));
 					g2d.rotate(-Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.drawString("?", feltX + stanFelt*8/5, feltY + stanFelt + 3);
+					g2d.rotate(Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
+					g2d.setFont(stanFont);
+					g2d.setColor(Color.magenta);
+				}
+				
+				//if community chest
+				if(board.fields[i].typeOfField == FieldProperties.CommunityChest){
+					g2d.setFont(new Font("arial", 1, 110));
+					g2d.setColor(board.fields[i].color);
+					g2d.rotate(-Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
+					g2d.drawString("C", feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.rotate(Math.PI/2, feltX + stanFelt*8/5, feltY + stanFelt + 3);
 					g2d.setFont(stanFont);
 					g2d.setColor(Color.magenta);
@@ -274,6 +297,7 @@ public class Display {
 		g.setFont(dice);
 		g.drawString("Roll the dice", MainAc.width/4 + 66*stanFelt/8 + 15, 15*stanFelt/4 + 30);
 		
+		//drawing houses
 		for (int j = 0; j < board.fields.length; j++) {
 			for (int k = 0; k < board.fields[j].getHouseAmounts(); k++) {
 				for (int l = 0; l < board.players.length; l++) {
@@ -283,13 +307,14 @@ public class Display {
 				}
 				
 				getFieldCorner(j);
-				g.fillRect(playerX + k*stanFelt/5, playerY, stanFelt/5, stanFelt/5);
+				g.fillRect(playerX + k*stanFelt/5 - (peopleOnField[j] - 1)*stanFelt/4, playerY - stanFelt/4, stanFelt/5, stanFelt/5);
 				g.setColor(Color.white);
-				g.drawRect(playerX + k*stanFelt/5, playerY, stanFelt/5, stanFelt/5);
+				g.drawRect(playerX + k*stanFelt/5 - (peopleOnField[j] - 1)*stanFelt/4, playerY - stanFelt/4, stanFelt/5, stanFelt/5);
 			}
 		}
 		
 		for (int j = 0; j < board.players.length; j++) {
+			// hvis der er mere end en på et felt skal de være forskudt 
 			peopleOnField[board.players[j].getPlayerPlace()]++;
 			g.setColor(board.players[j].getPlayerColor());
 			getFieldCorner(board.players[j].getPlayerPlace());
@@ -309,14 +334,56 @@ public class Display {
 					g.fillRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
 					g.setColor(Color.white);
 					g.drawRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
-					g.drawString(board.fields[j].getPropertyName(), MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 40);
-					g.drawString("" + j, MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 100);
+					
+					showFields = (3*MainAc.width/4)/13*2 + 40;
+					g.drawString(board.fields[j].getPropertyName(), MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+					showFields += 60;
+					g.drawString("The place number is: " + j, MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+					showFields += 60;
+					
+					
 					if(board.fields[j].isOwned()){
-						g.drawString("This Field Is Owned By " + board.fields[j].getOwnedBy(), MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 160);
+						g.drawString("This Field Is Owned By " + board.fields[j].getOwnedBy(), MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+						showFields += 60;
 					}
 					
 					if(board.fields[j].isBuyable() && !board.fields[j].isOwned()){
-						g.drawString("This Field is Buyable", MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2 + 220);
+						g.drawString("This Field is Buyable", MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+						showFields += 60;
+					}
+					
+					if(board.fields[j].typeOfField == FieldProperties.NormalField || board.fields[j].typeOfField == FieldProperties.TrainStation){
+						g.drawString("Price for landed on " + board.fields[j].getPriceLandedOn(), MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+						showFields += 60;
+					}
+					
+					if(board.fields[j].typeOfField == FieldProperties.NormalField){
+						g.drawString("House cost: " + board.fields[j].getPriceForHouse(), MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+						showFields += 60;
+					}
+					
+					if(board.fields[j].typeOfField == FieldProperties.NormalField){
+						g.drawString("Amount Of Houses: " + board.fields[j].getHouseAmounts(), MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+						showFields += 60;
+					}
+					
+					if(board.fields[j].typeOfField == FieldProperties.TrainStation){
+						if(board.fields[j].isOwned()){
+							int howManyTrainsDoYouOwn = 0;
+							for (int i = 0; i < board.fields.length; i++) {
+								if(board.fields[i].isOwned() && board.fields[i].typeOfField == FieldProperties.TrainStation){								
+									if(board.fields[i].getOwnedBy().equals(board.fields[j].getOwnedBy())){
+										howManyTrainsDoYouOwn++;
+									}
+								}
+							}
+							
+							g.drawString("Owner's Amount Of Railways: " + howManyTrainsDoYouOwn, MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+							showFields += 60;
+						}else{
+							g.drawString("This Station Is Not Owned", MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, showFields);
+							showFields += 60;
+						}
 					}
 				}
 			}
