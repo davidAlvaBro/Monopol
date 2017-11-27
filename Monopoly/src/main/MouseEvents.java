@@ -52,11 +52,11 @@ public class MouseEvents extends MouseAdapter{
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= MainAc.height/7 && my <= MainAc.height/7  + MainAc.height / 7){
 				MainAc.title = Title.BuyHouse;
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 2*MainAc.height/7 && my <= 2*MainAc.height/7  + MainAc.height / 7){
-				//Implement method Trade
+				MainAc.title = Title.PersonToTradeWith; //Tradeing And Stuff
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 3*MainAc.height/7 && my <= 3*MainAc.height/7  + MainAc.height / 7){
-				//Implement method Pawn/set for sale
+				MainAc.title = Title.PawnOrSetSale;
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 4*MainAc.height/7 && my <= 4*MainAc.height/7  + MainAc.height / 7){
-				//Implement method Buy Properties
+				MainAc.title = Title.Trade;
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 5*MainAc.height/7 && my <= 5*MainAc.height/7  + MainAc.height / 7){
 				MainAc.title = Title.Game;
 			}else if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7 && !Operations.canRollDice){
@@ -114,6 +114,42 @@ public class MouseEvents extends MouseAdapter{
 			}
 			
 			
+		}else if(MainAc.title == Title.PersonToTradeWith){			
+			for (int i = 0; i < board.players.length; i++){
+				if(!board.players[i].getPlayerName().equals(board.players[Operations.turn].getPlayerName())){
+					if(mx>= 0 && mx <= MainAc.width/4 - 20 && my >= propertiesDistance && my <= propertiesDistance + MainAc.height*5/7/26){
+						MainAc.title = Title.PropertiesTraderHas;
+						Board.personToTradeWith = i;
+					}
+					propertiesDistance += MainAc.height*5/7/26;
+				}
+			}
+			
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){
+				MainAc.title = Title.Game;
+			}
+			
+			
+		}else if(MainAc.title == Title.PropertiesTraderHas){
+			for (int i = 0; i < board.fields.length; i++){
+				if(board.fields[i].isOwned()){
+					if(board.fields[i].getOwnedBy().equals(board.players[Board.personToTradeWith].getPlayerName())){
+						if(mx>= 0 && mx <= MainAc.width/4 - 20 && my >= propertiesDistance && my <= propertiesDistance + MainAc.height*5/7/26){
+							MainAc.title = Title.WhatYouWantToGive;
+							Board.propertyTrade = i;
+						}
+						propertiesDistance += MainAc.height*5/7/26;
+					}
+				}	
+			}
+			
+			propertiesDistance = MainAc.height/7;
+			
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){ 
+				MainAc.title = Title.Game;
+			}
+			
+			
 		}else if(MainAc.title == Title.BuyHouse){
 			for (int i = 0; i < board.fields.length; i++){
 				if(board.fields[i].isOwned() && board.fields[i].typeOfField == FieldProperties.NormalField){
@@ -122,12 +158,119 @@ public class MouseEvents extends MouseAdapter{
 							board.players[Operations.turn].setPlayerCash(board.players[Operations.turn].getPlayerCash() - board.fields[i].getPriceForHouse());
 							board.fields[i].setHouseAmounts(board.fields[i].getHouseAmounts() + 1);
 							board.fields[i].setPriceLandedOn((int) ((int) board.fields[i].getStanPrice()*Math.pow(Field.houseFactor, board.fields[i].getHouseAmounts())));
+							board.players[Operations.turn].amountOfHouses++;
 						}
 						propertiesDistance += MainAc.height*5/7/26;
 					}
 				}	
 			}
 			
+			propertiesDistance = MainAc.height/7;
+			
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){ 
+				MainAc.title = Title.Game;
+			}
+			
+			
+		}else if(MainAc.title == Title.PawnOrSetSale){			
+			
+			//SetSale
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= MainAc.height/7 && my <= 7*MainAc.height/14){
+				MainAc.title = Title.SetForSale;
+			}
+			
+			//Pawn
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 7*MainAc.height/14 && my <= 6*MainAc.height/7){
+//				MainAc.title = Title.SetForSale;
+			}
+			
+			//Back
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){
+				MainAc.title = Title.Game;
+			}
+			
+			
+		}else if(MainAc.title == Title.SetForSale){
+			for (int i = 0; i < board.fields.length; i++){
+				if(board.fields[i].isOwned()){
+					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+						if(mx>= 0 && mx <= MainAc.width/4 - 20 && my >= propertiesDistance && my <= propertiesDistance + MainAc.height*5/7/26){
+							board.fields[i].forSale = true; 
+							MainAc.title = Title.SettingForSale;
+							Board.fieldSettingForSale = i;
+						}
+						propertiesDistance += MainAc.height*5/7/26;
+					}
+				}	
+			}
+			
+			propertiesDistance = MainAc.height/7;
+			
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){ 
+				MainAc.title = Title.Game;
+			}
+			
+			
+		}else if(MainAc.title == Title.SettingForSale){
+						
+			//More Price
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= MainAc.height/7 && my <= 3*MainAc.height/7){ 
+				board.fields[Board.fieldSettingForSale].priceForBuying += 10;
+			}
+			
+			//Less Price
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 4*MainAc.height/7 && my <= 6*MainAc.height/7){ 
+				board.fields[Board.fieldSettingForSale].priceForBuying -= 10;
+			}
+			
+			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){ 
+				MainAc.title = Title.Game;
+			}
+			
+		}else if(MainAc.title == Title.Trade){
+			for (int i = 0; i < board.fields.length; i++){
+				if(board.fields[i].isOwned() && board.fields[i].forSale){
+					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+					}else{
+						if(mx>= 0 && mx <= MainAc.width/4 - 20 && my >= propertiesDistance && my <= propertiesDistance + MainAc.height*5/7/26 && board.players[Operations.turn].getPlayerCash() > board.fields[i].priceForBuying){
+							board.players[Operations.turn].setPlayerCash(board.players[Operations.turn].getPlayerCash() - board.fields[i].priceForBuying);
+							for (int j = 0; j < board.players.length; j++) {
+								if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+									board.players[j].setPlayerCash(board.players[j].getPlayerCash() + board.fields[i].priceForBuying);
+								}
+							}
+							board.fields[i].setOwnedBy(board.players[Operations.turn].getPlayerName());							
+							board.players[Operations.turn].ownedFields.add(board.players[Operations.turn].ownedFields.size(), board.fields[i]);
+							board.fields[i].forSale = false;
+							
+							
+							if(board.fields[i].typeOfField == FieldProperties.TrainStation){
+								int howManyTrainsDoYouOwn = 0;
+								for (int j = 0; j < board.fields.length; j++) {
+									if(board.fields[j].isOwned()){
+										if(board.fields[j].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+											if(board.fields[j].typeOfField == FieldProperties.TrainStation){
+												howManyTrainsDoYouOwn++;
+											}
+										}
+									}
+								}
+								for (int j = 0; j < board.fields.length; j++) {
+									if(board.fields[j].isOwned()){
+										if(board.fields[j].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+											if(board.fields[j].typeOfField == FieldProperties.TrainStation){
+												board.fields[j].setPriceLandedOn((int) (25*Math.pow(2, howManyTrainsDoYouOwn - 1)));
+											}
+										}
+									}
+								}
+							}
+							board.players[Operations.turn].amountOfHouses += board.fields[i].getHouseAmounts();
+						}
+						propertiesDistance += MainAc.height*5/7/26;
+					}
+				}	
+			}			
 			propertiesDistance = MainAc.height/7;
 			
 			if(mx >= 0 && mx <= MainAc.width / 4 - 20 && my >= 6*MainAc.height/7 && my <= 6*MainAc.height/7  + MainAc.height / 7){ 
@@ -207,7 +350,7 @@ public class MouseEvents extends MouseAdapter{
 			}			
 		}
 		
-		if(MainAc.title == Title.Game || MainAc.title == Title.ActionMenu || MainAc.title == Title.MeMenu || MainAc.title == Title.ShowMyProperties || MainAc.title == Title.BuyHouse ){
+		if(MainAc.isInGame()){
 			stanField = (3*MainAc.width/4)/13;
 			fieldX = MainAc.width/4; 
 			fieldY = 0;
@@ -283,6 +426,18 @@ public class MouseEvents extends MouseAdapter{
 						board.showFields[i] = true;
 					}
 					fieldY -= stanField;
+				}
+			}
+			
+			if(board.landedOnChance){
+				if(!(mx >= MainAc.width/4 + (3*MainAc.width/4)/13*2 && mx <= MainAc.width/4 + ((3*MainAc.width/4)/13*2 + MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 20) && my >= (3*MainAc.width/4)/13*2 && my <= (3*MainAc.width/4)/13*2 + (MainAc.height - (3*MainAc.width/4)/13*4 - 20))){
+					board.landedOnChance = false;
+				}
+			}
+			
+			if(board.landedOnCommunityChest){
+				if(!(mx >= MainAc.width/4 + (3*MainAc.width/4)/13*2 && mx <= MainAc.width/4 + ((3*MainAc.width/4)/13*2 + MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 20) && my >= (3*MainAc.width/4)/13*2 && my <= (3*MainAc.width/4)/13*2 + (MainAc.height - (3*MainAc.width/4)/13*4 - 20))){
+					board.landedOnCommunityChest = false;
 				}
 			}
 		}

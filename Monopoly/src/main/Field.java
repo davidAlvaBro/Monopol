@@ -9,7 +9,10 @@ public class Field {
 	private int price, priceForHouse, priceLandedOn, mortgagePrice, houseAmounts;
 	private String propertyName, ownedBy;
 	private boolean owned, mortgaged, buyable = false;
+	public boolean forSale = false;
 	public Color color; 
+	//Remember to set this price when you set for sale
+	public int priceForBuying;
 	FieldProperties typeOfField;
 	
 	public Field(int price, int priceForHouse, String propertyName, FieldProperties typeOfField){
@@ -114,7 +117,9 @@ public class Field {
 		
 		if(typeOfField == FieldProperties.NormalField || typeOfField == FieldProperties.TrainStation){
 			buyable = true;
-		}	
+		}
+		
+		priceForBuying = this.price;
 	}
 	
 

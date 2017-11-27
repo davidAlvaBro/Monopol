@@ -1,6 +1,6 @@
 package main;
 
-public enum Title {
+public enum Title {	
 	MainMenu(),
 	ActionMenu(),
 	SetGameMenu(),
@@ -9,5 +9,14 @@ public enum Title {
 	ShowMyProperties(),
 	WinnerScreen(),
 	BuyHouse(),
+	Trade(),
+	SetForSale(),
+	SettingForSale(),
+	PawnOrSetSale(),
+	
+	PersonToTradeWith(),
+	PropertiesTraderHas(),
+	WhatYouWantToGive(),
+	
 	Game;
 }

@@ -3,37 +3,32 @@ package main;
 import java.util.Random;
 
 public class Chance {
-	private static TypeOfChance typeOfChance;
 	private static Random r = new Random();
 	private static int random;
+	private static String whatHappens = "";
 	
 	public static String drawChance(Board board){
-		random = r.nextInt(4);
-		
-		if(random == 1){
-			typeOfChance = TypeOfChance.GetMoney;
+		random = r.nextInt(4) + 1;
+//		System.out.println("We Got A Chance And The Random Thing Is: " + random);
+			
+		switch(random){
+		case 1:
 			return getMoney(board);
-			
-		}else if(random == 2){
-			typeOfChance = TypeOfChance.MoveToAPlace;
+		case 2:
 			return moveToAPlace(board);
-			
-		}else if(random == 3){
-			typeOfChance = TypeOfChance.PayUp;
+		case 3:
 			return payUp(board);
-			
-		}else if(random == 4){
-			typeOfChance = TypeOfChance.SpecialStuff;
+		case 4:
 			return speacialStuff(board);
 		}
 		
-		else return "lol. This Cant Happen"; 
+		return "Lol. This Is Not Possible You Dirty Hacker!";
 	}
 	
 	public static String getMoney(Board board){
 		int value = 0; 
-		String whatHappens = "";
-		random = r.nextInt();
+//		System.out.println("This Is A Get Money");
+		random = r.nextInt(6) + 1;
 		switch(random){
 		case 1:
 			value = Operations.round*Operations.round*Operations.round/2;
@@ -72,13 +67,19 @@ public class Chance {
 	}
 	
 	public static String moveToAPlace(Board board){
-		
+		random = r.nextInt(40);
+//		System.out.println("We Got A Move To A Place Chance");
+		int placeBefore = board.players[Operations.turn].getPlayerPlace();
+		board.players[Operations.turn].setPlayerPlace(random);
+		whatHappens = "You Move To " + board.fields[random].getPropertyName() + " From " + placeBefore; 
+		board.landedOn();
+		return whatHappens;
 	}
 	
 	public static String payUp(Board board){
 		int value = 0; 
-		String whatHappens = "";
-		random = r.nextInt();
+		random = r.nextInt(6) + 1;
+//		System.out.println("We Got A Pay Up Chance");
 		switch(random){
 		case 1:
 			value = Operations.round*Operations.round*Operations.round/2;
@@ -117,7 +118,21 @@ public class Chance {
 	}
 
 	public static String speacialStuff(Board board){
+		// impliment mere shit here like killing stuff xD
+		random = r.nextInt(2) + 1;
+//		System.out.println("We Got A Special Stuff Chance");
+		switch(random){
+		case 1:
+			whatHappens = "Go To Jail You Filthy Criminal";
+			board.players[Operations.turn].goToJail();
+			break;
+		case 2:
+			whatHappens = "Next Time You Go To Jail I Will Bail You Out";
+			board.players[Operations.turn].outOfJailFreeCard = true;
+			break;
+		}
 		
+		return whatHappens;
 	}
 
 }

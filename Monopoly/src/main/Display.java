@@ -312,15 +312,22 @@ public class Display {
 				g.drawRect(playerX + k*stanFelt/5 - (peopleOnField[j] - 1)*stanFelt/4, playerY - stanFelt/4, stanFelt/5, stanFelt/5);
 			}
 		}
-		
+//		Draw Players
 		for (int j = 0; j < board.players.length; j++) {
 			// hvis der er mere end en på et felt skal de være forskudt 
 			peopleOnField[board.players[j].getPlayerPlace()]++;
 			g.setColor(board.players[j].getPlayerColor());
 			getFieldCorner(board.players[j].getPlayerPlace());
-			g.fillRect(playerX, playerY, stanFelt/4, stanFelt/4);	
-			g.setColor(Color.white);
-			g.drawRect(playerX, playerY, stanFelt/4, stanFelt/4);
+			if(board.players[j].inJail){
+				g.fillRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4);	
+				g.setColor(Color.white);
+				g.drawRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4);
+			}else{
+				g.fillRect(playerX, playerY, stanFelt/4, stanFelt/4);	
+				g.setColor(Color.white);
+				g.drawRect(playerX, playerY, stanFelt/4, stanFelt/4);
+			}
+			
 		}
 		
 		for (int j = 0; j < board.players.length; j++) {
@@ -388,6 +395,8 @@ public class Display {
 				}
 			}
 		}
+		
+		board.render(g);
 	}
 	
 	public void getFieldCorner(int numField){

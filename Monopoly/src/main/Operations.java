@@ -8,9 +8,10 @@ public class Operations {
 	public static boolean canRollDice = true;
 	public static boolean buying = false;
 	public static boolean idiots = false;
-	private int tempMove = move;
+	public static int tempMove = move;
 	private Board board;
 	public static int copyOfTempTurn;
+	int triesToGetOutOfJail = 0;
 	
 	
 	public Operations(Board board){
@@ -58,11 +59,28 @@ public class Operations {
 		}
 		
 		if(tempMove != move){
-			board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() + Dice.diceLeft + Dice.diceRight);
-			if(board.players[tempTurn].getPlayerPlace() > board.fields.length - 1){
-				board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() - board.fields.length);
-				board.players[tempTurn].setPlayerCash(board.players[tempTurn].getPlayerCash() + MainAc.passingStart);
-			}////////////////////////
+			if(board.players[tempTurn].inJail){
+				
+				if(Dice.diceLeft == Dice.diceRight){
+					board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() + Dice.diceLeft + Dice.diceRight);
+					board.players[tempTurn].inJail = false;
+				}else if(triesToGetOutOfJail < 3){
+					System.out.println("Try Again");
+					canRollDice = true;
+					triesToGetOutOfJail++;
+				}else{
+					System.out.println("lol nub");
+					triesToGetOutOfJail = 0;
+				}
+				
+			}else{
+				board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() + Dice.diceLeft + Dice.diceRight);
+				if(board.players[tempTurn].getPlayerPlace() > board.fields.length - 1){
+					board.players[tempTurn].setPlayerPlace(board.players[tempTurn].getPlayerPlace() - board.fields.length);
+					board.players[tempTurn].setPlayerCash(board.players[tempTurn].getPlayerCash() + MainAc.passingStart);
+					board.players[tempTurn].laps++;
+				}
+			}
 			tempMove = move;
 			board.landedOn();
 		}

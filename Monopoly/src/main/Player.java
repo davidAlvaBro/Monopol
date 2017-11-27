@@ -7,18 +7,23 @@ public class Player {
 	public static int amountOfPlayers;
 	public static int typedAmountOfPlayers = 2;
 	public static LinkedList<Color> ownedColors = new LinkedList<Color>();
-	
+
+	public boolean inJail = false;
+	public boolean outOfJailFreeCard = false;
+	public int laps = 0, amountOfHouses = 0;
 	private int playerNum, playerCash, playerValue, playerPlace;
 	private String playerName;
 	public LinkedList<Field> ownedFields = new LinkedList<Field>();
 	private Color playerColor = Color.white;
+	private Board board;
 //	private Cards[] playerCards;
 	
-	public Player(){
+	public Player(Board board){
 		Player.amountOfPlayers++;
 		this.playerNum = Player.amountOfPlayers;
 		this.playerCash = 1500;
 		this.playerName = "";
+		this.board = board;
 		playerPlace = 0;
 		ownedColors.add(this.playerColor);
 	}
@@ -35,6 +40,19 @@ public class Player {
 		for (int i = 0; i < ownedFields.size(); i++) {
 			if(!ownedFields.get(i).isMortgaged()){
 				playerValue += ownedFields.get(i).getMortgagePrice();
+			}
+		}
+	}
+	
+	public void goToJail(){
+		if(outOfJailFreeCard){
+			outOfJailFreeCard = false;
+		}else{
+			inJail = true;
+			for (int i = 0; i < board.fields.length; i++) {
+				if(board.fields[i].getPropertyName().equals("Just Visting")){
+					playerPlace = i;
+				}
 			}
 		}
 	}

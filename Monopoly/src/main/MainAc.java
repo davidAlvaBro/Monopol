@@ -100,7 +100,7 @@ public class MainAc extends Canvas implements Runnable {
 		g.fillRect(0, 0, width, height);
 		
 //		Vi kalder det vi render fra display funktionen. 
-		if(title == Title.Game || title == Title.ActionMenu || title == Title.MeMenu || title == Title.ShowMyProperties || title == Title.BuyHouse){
+		if(isInGame()){
 			display.render(g, g2d);
 		}else if(title == Title.MainMenu){
 			mainMenu.render(g);
@@ -118,6 +118,12 @@ public class MainAc extends Canvas implements Runnable {
 		g2d.dispose();
 		bs.show();
 		
+	}
+	
+	public static boolean isInGame(){
+		if(title == Title.Game || title == Title.ActionMenu || title == Title.MeMenu || title == Title.ShowMyProperties || title == Title.BuyHouse || title == Title.Trade || title == Title.SetForSale || MainAc.title == Title.SettingForSale || MainAc.title == Title.PawnOrSetSale || title == Title.PersonToTradeWith || MainAc.title == Title.PropertiesTraderHas || MainAc.title == Title.WhatYouWantToGive ){
+			return true;
+		}else return false;
 	}
 	
 //	Vi opretter en instance af MainAc og derfor kører spillet 

@@ -70,6 +70,185 @@ public class Menu {
 			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
 			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
 			
+		}else if(MainAc.title == Title.PawnOrSetSale){
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			g.drawRect(0, MainAc.height/7, MainAc.width/4 - 20, 5*MainAc.height/14);
+			g.drawRect(0, 7*MainAc.height/14, MainAc.width/4 - 20, MainAc.height*5/7);
+			
+			g.setFont(leftMenuFont);
+			g.drawString("Set For Sale", 10, MainAc.height*2/7 + 40);
+			g.drawString("Pawn Property", 10, MainAc.height*5/7 - 20);
+			
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.SetForSale){
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			for (int i = 0; i < board.fields.length; i++) {
+				if(board.fields[i].isOwned()){
+					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
+						g.setFont(tileFont);
+						g.setColor(board.fields[i].color);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
+						g.setColor(Color.white);
+						g.drawString("" + board.fields[i].getPrice(), MainAc.width/4 - 50, propertiesDistance + 20);
+						propertiesDistance += MainAc.height * 5/7/26;
+						g.setFont(leftMenuFont);
+					}
+				}
+			}propertiesDistance = MainAc.height/7;
+			
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.SettingForSale){
+			//Lav det oven over til det samme som det her. Med firkanter om
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7);
+			g.drawRect(0, MainAc.height*3/7, MainAc.width/4 - 20, MainAc.height/7);
+			g.setFont(actionMenuFont);
+			g.drawString(board.fields[Board.fieldSettingForSale].getPropertyName(), 10, MainAc.height*3/7 + 50);
+			g.drawString(board.fields[Board.fieldSettingForSale].priceForBuying + "", 30, MainAc.height*3/7 + 100);
+			
+			g.setFont(leftMenuFont);
+			g.drawString("More", (MainAc.width/4 - 20) / 2 - 60, MainAc.height*2/7 + 10);
+			g.drawString("Less", (MainAc.width/4 - 20) / 2 - 60, MainAc.height*5/7 + 10);
+			
+			
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			g.setFont(leftMenuFont);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Done", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.Trade){
+			//Lav det oven over til det samme som det her. Med firkanter om
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			for (int i = 0; i < board.fields.length; i++) {
+				if(board.fields[i].isOwned() && (board.fields[i].typeOfField == FieldProperties.NormalField || board.fields[i].typeOfField == FieldProperties.TrainStation) && board.fields[i].forSale){
+					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+						
+					}else{
+						g.setColor(Color.white);
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
+						g.setFont(tileFont);
+						g.setColor(board.fields[i].color);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
+						for (int j = 0; j < board.players.length; j++) {
+							if(board.fields[i].getOwnedBy().equals(board.players[j].getPlayerName())){
+								g.setColor(board.players[j].getPlayerColor());
+							}
+						}
+						g.drawString("" + board.fields[i].priceForBuying, MainAc.width/4 - 55, propertiesDistance + 20);
+						propertiesDistance += MainAc.height * 5/7/26;
+						g.setFont(leftMenuFont);
+					}
+				}
+			}propertiesDistance = MainAc.height/7;
+			
+			g.setColor(Color.white);
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.PersonToTradeWith){
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			for (int i = 0; i < board.players.length; i++) {
+				if(!board.players[Operations.turn].getPlayerName().equals(board.players[i].getPlayerName())){
+					g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
+					g.setFont(tileFont);
+					g.setColor(board.players[i].getPlayerColor());
+					g.drawString(board.players[i].getPlayerName(), 10, propertiesDistance + 20);
+					g.setColor(Color.white);
+					propertiesDistance += MainAc.height * 5/7/26;
+					g.setFont(leftMenuFont);
+				}
+			}propertiesDistance = MainAc.height/7;
+			
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.PropertiesTraderHas){
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			for (int i = 0; i < board.fields.length; i++) {
+				if(board.fields[i].isOwned()){
+					if(board.fields[i].getOwnedBy().equals(board.players[Board.personToTradeWith].getPlayerName())){
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
+						g.setFont(tileFont);
+						g.setColor(board.fields[i].color);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
+						g.setColor(Color.white);
+						g.drawString("" + board.fields[i].getPriceForHouse(), MainAc.width/4 - 50, propertiesDistance + 20);
+						propertiesDistance += MainAc.height * 5/7/26;
+						g.setFont(leftMenuFont);
+					}
+				}
+			}propertiesDistance = MainAc.height/7;
+			
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
+		}else if(MainAc.title == Title.WhatYouWantToGive){
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.setColor(board.players[Operations.turn].getPlayerColor());
+			g.drawString(board.players[Operations.turn].getPlayerName(), 0, sFMenu + 45);
+			g.setColor(Color.white);
+			
+			for (int i = 0; i < board.fields.length; i++) {
+				if(board.fields[i].isOwned()){
+					if(board.fields[i].getOwnedBy().equals(board.players[Operations.turn].getPlayerName())){
+						g.drawRect(0, propertiesDistance, MainAc.width/4 - 20, MainAc.height*5/7/26);
+						g.setFont(tileFont);
+						g.setColor(board.fields[i].color);
+						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
+						g.setColor(Color.white);
+						g.drawString("" + board.fields[i].getPrice(), MainAc.width/4 - 50, propertiesDistance + 20);
+						propertiesDistance += MainAc.height * 5/7/26;
+						g.setFont(leftMenuFont);
+					}
+				}
+			}propertiesDistance = MainAc.height/7;
+			
+			g.setColor(Color.white);
+			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
+			
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
+			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			
 		}else{
 			for (int i = 0; i < 7; i++) {
 				g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height / 7);

@@ -1,6 +1,7 @@
 package main;
 
 import java.awt.Color;
+import java.awt.Graphics;
 
 public class Board {
 	private String[] fieldNames = {"Go","Old Kent Road","Community Chest", "White Chapel Road","Income Tax",
@@ -15,6 +16,11 @@ public class Board {
 	public boolean createdPlayers = false;
 	private boolean createdAmountOfPlayers;
 	public boolean[] showFields = new boolean[fieldNames.length];
+	private String chance, communityChest;
+	public boolean landedOnChance = false, landedOnCommunityChest = false;
+	public static int fieldSettingForSale;
+	public static int personToTradeWith;
+	public static int propertyTrade;
 	
 	public Board(){
 		FieldProperties temp;
@@ -35,6 +41,7 @@ public class Board {
 			fields[i] = new Field(i*10 + 50, i*2+10, fieldNames[i], temp);
 		}
 		
+		
 		for (int i = 0; i < showFields.length; i++) {
 			showFields[i] = false;
 		}
@@ -48,7 +55,7 @@ public class Board {
 		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){ 
 			players = new Player[Player.typedAmountOfPlayers];
 			for (int i = 0; i < Player.typedAmountOfPlayers; i++) {
-				players[i] = new Player();
+				players[i] = new Player(this);
 			}
 			createdAmountOfPlayers = true;
 		}
@@ -114,6 +121,27 @@ public class Board {
 		}
 	}
 	
+	public void render(Graphics g){
+		
+		if(landedOnChance){
+			g.setColor(Color.black);
+			g.fillRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+			g.setColor(Color.white);
+			g.drawRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+			
+			g.drawString("You Landed On Chance! ", MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, (3*MainAc.width/4)/13*2 + 40);
+			g.drawString(chance, MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, (3*MainAc.width/4)/13*2 + 100);
+		}else if(landedOnCommunityChest){
+			g.setColor(Color.black);
+			g.fillRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+			g.setColor(Color.white);
+			g.drawRect(MainAc.width/4 + (3*MainAc.width/4)/13*2, (3*MainAc.width/4)/13*2, MainAc.width - (3*MainAc.width/4)/13*4 - MainAc.width/4 - 11, MainAc.height - (3*MainAc.width/4)/13*4 - 11);
+			
+			g.drawString("You Landed On A Community Chest! ", MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, (3*MainAc.width/4)/13*2 + 40);
+			g.drawString(communityChest, MainAc.width/4 + (3*MainAc.width/4)/13*2 + 10, (3*MainAc.width/4)/13*2 + 100);
+		}
+	}
+	
 	public boolean shouldShowField(){
 		for (int i = 0; i <showFields.length; i++) {
 			if(showFields[i]){
@@ -133,8 +161,15 @@ public class Board {
 			}
 		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Chance){
 			//FYR OP FOR EN CHANCEN
+			chance = Chance.drawChance(this);
+			landedOnChance = true;
+			
+			
 		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.CommunityChest){
 			//FYR OP FOR EN COMMUNITYCHEST
+			communityChest = CommunityChest.drawCommunityChest(this);
+			landedOnCommunityChest = true;
+					
 		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Taxes){
 			
 			if(this.players[Operations.turn].getPlayerPlace() == 4){
@@ -144,6 +179,9 @@ public class Board {
 			}
 		}else if(this.fields[this.players[Operations.turn].getPlayerPlace()].typeOfField == FieldProperties.Corners){
 			//FYR OP FOR EN FUUUUUUCK DER SKAL SKE MEGET HER.......
+			if(this.players[Operations.turn].getPlayerPlace() == 30){
+				this.players[Operations.turn].goToJail();
+			}
 		}
 	}
 	
