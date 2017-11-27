@@ -10,6 +10,8 @@ public class Field {
 	private String propertyName, ownedBy;
 	private boolean owned, mortgaged, buyable = false;
 	public boolean forSale = false;
+	//HUSK AT LAVE ET FOR LOOP DER TJEKKER OM DE INANOFFER, OG SÆTTER DEM AF IGEN EFTER DET ER DONE
+	public boolean inAnOffer = false;
 	public Color color; 
 	//Remember to set this price when you set for sale
 	public int priceForBuying;

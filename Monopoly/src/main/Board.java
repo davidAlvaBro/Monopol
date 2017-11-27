@@ -18,9 +18,14 @@ public class Board {
 	public boolean[] showFields = new boolean[fieldNames.length];
 	private String chance, communityChest;
 	public boolean landedOnChance = false, landedOnCommunityChest = false;
+	
 	public static int fieldSettingForSale;
+	// Things for tradeing 
 	public static int personToTradeWith;
 	public static int propertyTrade;
+	public static int moneyYouWantToGive;
+	public static int amountOfPropertiesInTheTrade;
+	
 	
 	public Board(){
 		FieldProperties temp;

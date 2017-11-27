@@ -210,7 +210,7 @@ public class Menu {
 						g.setColor(board.fields[i].color);
 						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
 						g.setColor(Color.white);
-						g.drawString("" + board.fields[i].getPriceForHouse(), MainAc.width/4 - 50, propertiesDistance + 20);
+						g.drawString("" + board.fields[i].getPrice(), MainAc.width/4 - 50, propertiesDistance + 20);
 						propertiesDistance += MainAc.height * 5/7/26;
 						g.setFont(leftMenuFont);
 					}
@@ -236,6 +236,9 @@ public class Menu {
 						g.setColor(board.fields[i].color);
 						g.drawString(board.fields[i].getPropertyName(), 10, propertiesDistance + 20);
 						g.setColor(Color.white);
+						if(board.fields[i].inAnOffer){
+							g.setColor(board.players[Board.personToTradeWith].getPlayerColor());
+						}
 						g.drawString("" + board.fields[i].getPrice(), MainAc.width/4 - 50, propertiesDistance + 20);
 						propertiesDistance += MainAc.height * 5/7/26;
 						g.setFont(leftMenuFont);
@@ -244,10 +247,24 @@ public class Menu {
 			}propertiesDistance = MainAc.height/7;
 			
 			g.setColor(Color.white);
+			g.setFont(tileFont);
+			g.drawRect(0, MainAc.height/7 + MainAc.height * 25 * 5/7/26, MainAc.width / 4 - 20,  MainAc.height*5/7/26);
+			g.drawString("Money: ", 10, MainAc.height/7 + MainAc.height * 25 * 5/7/26 + 20);
+			g.drawString("" + Board.moneyYouWantToGive, 90, MainAc.height/7 + MainAc.height * 25 * 5/7/26 + 20);
+			
+			g.drawRect(MainAc.width / 4 - 20 - 2 * MainAc.height*5/7/26, MainAc.height/7 + MainAc.height * 25 * 5/7/26, MainAc.height*5/7/26, MainAc.height*5/7/26);
+			g.drawRect(MainAc.width / 4 - 20 - MainAc.height*5/7/26, MainAc.height/7 + MainAc.height * 25 * 5/7/26, MainAc.height*5/7/26, MainAc.height*5/7/26);
+			
+			g.drawString("Up", MainAc.width / 4 - 20 - 2 * MainAc.height*5/7/26 + 2, MainAc.height/7 + MainAc.height * 25 * 5/7/26 + 20);
+			g.drawString("Min", MainAc.width / 4 - 20 - MainAc.height*5/7/26 + 2, MainAc.height/7 + MainAc.height * 25 * 5/7/26 + 20);
+			
 			g.drawRect(0, sFMenu, MainAc.width / 4 - 20, MainAc.height * 6 / 7);
 			
-			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 7);
-			g.drawString("Back", 0, MainAc.height / 7*6 + 45);
+			g.setFont(leftMenuFont);
+			g.drawRect(0, MainAc.height / 7*6, MainAc.width / 4 - 20, MainAc.height / 14);
+			g.drawRect(0, MainAc.height / 7*6 + MainAc.height / 14, MainAc.width / 4 - 20, MainAc.height / 14);
+			g.drawString("That's A Deal", 0, MainAc.height / 7*6 + 45);
+			g.drawString("Cancel", 0, MainAc.height / 7*6 + MainAc.height / 14 + 45 );
 			
 		}else{
 			for (int i = 0; i < 7; i++) {
