@@ -338,7 +338,8 @@ public class Menu {
 						g.drawString("Turn", 0, sFMenu + 45);
 						g.setFont(playerNameFont);
 						g.setColor(board.players[Operations.turn].getPlayerColor());
-						g.drawString( board.players[Operations.turn].getPlayerName(), MainAc.width*5/32, sFMenu + MainAc.height/7 -10);
+						g.drawString("" + Operations.round, MainAc.width*13/64, sFMenu + 35);
+						g.drawString(board.players[Operations.turn].getPlayerName(), MainAc.width*4/32, sFMenu + MainAc.height/7 -10);
 						g.setFont(leftMenuFont);
 						g.setColor(Color.white);
 					}else if( i == 1){

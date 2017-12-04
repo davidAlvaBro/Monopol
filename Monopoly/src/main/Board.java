@@ -59,7 +59,11 @@ public class Board {
 		
 		if(MainAc.title == Title.SetPlayer && !createdAmountOfPlayers){ 
 			players = new Player[Player.typedAmountOfPlayers];
-			for (int i = 0; i < Player.typedAmountOfPlayers; i++) {
+			for (int i = 0; i < AI.amountOfAIs; i++) {
+				players[i] = new AI(this);
+			}
+			
+			for (int i = AI.amountOfAIs; i < Player.typedAmountOfPlayers; i++) {
 				players[i] = new Player(this);
 			}
 			createdAmountOfPlayers = true;

@@ -4,9 +4,10 @@ import java.awt.Color;
 
 public class Field {
 	public static final double houseFactor = 1.82;
-	private static int amountOfFields;
+	private static int amountOfFields, amountOfNormalFields;
 	private int stanPrice;
 	private int price, priceForHouse, priceLandedOn, mortgagePrice, houseAmounts;
+	public static int numberNormalField;
 	private String propertyName, ownedBy;
 	private boolean owned, mortgaged, buyable = false;
 	public boolean forSale = false;
@@ -21,6 +22,8 @@ public class Field {
 		this.typeOfField = typeOfField;
 		
 		if(typeOfField == FieldProperties.NormalField){
+			amountOfNormalFields++;
+			numberNormalField = amountOfNormalFields;
 			if(amountOfFields <= 1){
 				//brown
 				color = new Color(139, 69, 19);
@@ -124,6 +127,16 @@ public class Field {
 		priceForBuying = this.price;
 	}
 	
+
+	public int getNumberNormalField() {
+		return numberNormalField;
+	}
+
+
+	public void setNumberNormalField(int numberNormalField) {
+		this.numberNormalField = numberNormalField;
+	}
+
 
 	public int getStanPrice() {
 		return stanPrice;

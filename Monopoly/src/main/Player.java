@@ -10,13 +10,16 @@ public class Player {
 
 	public boolean inJail = false;
 	public boolean outOfJailFreeCard = false;
+	
 	public int laps = 0, amountOfHouses = 0;
-	private int playerNum, playerCash, playerValue, playerPlace;
-	private String playerName;
 	public LinkedList<Field> ownedFields = new LinkedList<Field>();
-	private Color playerColor = Color.white;
-	private Board board;
-//	private Cards[] playerCards;
+	
+	protected int playerNum, playerCash, playerValue, playerPlace;
+	protected String playerName;	
+	protected Color playerColor = Color.white;
+	
+	protected Board board;
+	
 	
 	public Player(Board board){
 		Player.amountOfPlayers++;

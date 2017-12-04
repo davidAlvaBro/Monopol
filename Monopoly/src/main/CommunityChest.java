@@ -10,7 +10,6 @@ public class CommunityChest {
 	public static String drawCommunityChest(Board board){
 		//Lav en Special Things der får alle til at give til de fattige og tage fra de rige
 		random = r.nextInt(2) + 1;
-		System.out.println("We Got A CommunityChest And The Random Thing Is: " + random);
 			
 		switch(random){
 		case 1:
@@ -25,7 +24,6 @@ public class CommunityChest {
 	public static String getMoney(Board board){
 		int value = 0; 
 		random = r.nextInt(5) + 1;
-		System.out.println("ITS A BOY, wait... its just a get money ");
 		switch(random){
 		case 1:
 			if(board.players[Operations.tempTurn].getPlayerValue() < 500){
@@ -88,11 +86,11 @@ public class CommunityChest {
 	public static String payUp(Board board){
 		int value = 0; 
 		random = r.nextInt(5) + 1;
-		System.out.println("We Got A Pay Up Tax Thing");
 		switch(random){
 		case 1:
 			value = board.players[Operations.tempTurn].laps*50;
 			whatHappens = "Gass Tax: " + value;
+//			System.out.println("Gass Tax Cost: " + value);
 			break;
 		case 2:
 			value = board.players[Operations.tempTurn].amountOfHouses*50;

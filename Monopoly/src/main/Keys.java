@@ -3,8 +3,10 @@ package main;
 import java.awt.Graphics;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.TimeUnit;
 
 public class Keys extends KeyAdapter{
+	public static boolean isPaused = false;
 	private MainAc game;
 	private Board board;
 	public static boolean ifPressed = false;
@@ -18,6 +20,8 @@ public class Keys extends KeyAdapter{
 	
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
+		
+		
 		if(key == KeyEvent.VK_ESCAPE){
 			System.exit(1);
 			
@@ -28,12 +32,29 @@ public class Keys extends KeyAdapter{
 				Operations.idiots = true;
 			}
 		}
+		
+		if(key == KeyEvent.VK_S){
+			AI.AISpeed = 0;
+		}
+		
+		if(key == KeyEvent.VK_P){
+			if(isPaused){
+				isPaused = false;
+			}else if(!isPaused){
+				isPaused = true;
+			}
+		}
+		
 	}
 	
 	
 	
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
+		
+		if(key == KeyEvent.VK_S){
+			AI.AISpeed = 500;
+		}
 		
 		if(MainAc.title == Title.SetPlayer && board.players[SetPlayer.player -1].getPlayerName().length() < 6){
 			if(key == KeyEvent.VK_Q){

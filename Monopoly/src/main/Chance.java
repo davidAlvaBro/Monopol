@@ -31,7 +31,8 @@ public class Chance {
 		random = r.nextInt(6) + 1;
 		switch(random){
 		case 1:
-			value = Operations.round*Operations.round*Operations.round/2;
+			value = 50 + Operations.round*Operations.round/24;
+//			System.out.println("EEEYY ITS YA BOY");
 			whatHappens = "You Won The Great Price Of The Time Lottery and resive " + value;
 			break;
 		case 2:
@@ -82,8 +83,9 @@ public class Chance {
 //		System.out.println("We Got A Pay Up Chance");
 		switch(random){
 		case 1:
-			value = Operations.round*Operations.round*Operations.round/2;
+			value = 50 + Operations.round*Operations.round/24;
 			whatHappens = "You Have Won The Anti Lottery. Pay Up Bitch " + value;
+//			System.out.println("Did This Kill You?");
 			break;
 		case 2:
 			value = 50;

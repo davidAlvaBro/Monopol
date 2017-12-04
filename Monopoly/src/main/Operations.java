@@ -23,6 +23,13 @@ public class Operations {
 	public void tick(){
 		copyOfTempTurn = tempTurn;
 		
+		if(board.createdPlayers){
+			if(board.players[tempTurn] instanceof AI){
+				AI.isAITurn = true;
+				((AI) board.players[tempTurn]).runAI();
+			}
+		}
+		
 		if(Dice.rollDice){
 			Dice.rollTheDice();
 		}
