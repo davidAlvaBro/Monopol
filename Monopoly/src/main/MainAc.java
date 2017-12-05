@@ -99,7 +99,7 @@ public class MainAc extends Canvas implements Runnable {
 		g.setColor(Color.black);
 		g.fillRect(0, 0, width, height);
 		
-//		Vi kalder det vi render fra display funktionen. 
+//		Vi kalder det vi render fra display funktionen eller de andre menuer. 
 		if(isInGame()){
 			display.render(g, g2d);
 		}else if(title == Title.MainMenu){
@@ -120,6 +120,7 @@ public class MainAc extends Canvas implements Runnable {
 		
 	}
 	
+	// tjekker om det er inde i spillet 
 	public static boolean isInGame(){
 		if(title == Title.Game || title == Title.ActionMenu || title == Title.MeMenu || title == Title.ShowMyProperties || title == Title.BuyHouse || title == Title.Trade || title == Title.SetForSale || MainAc.title == Title.SettingForSale || MainAc.title == Title.PawnOrSetSale || title == Title.PersonToTradeWith || MainAc.title == Title.PropertiesTraderHas || MainAc.title == Title.WhatYouWantToGive ){
 			return true;

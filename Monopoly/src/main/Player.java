@@ -60,6 +60,8 @@ public class Player {
 		}
 	}
 	
+	//Getters og setters
+	
 	public static int getAmountOfPlayers() {
 		return amountOfPlayers;
 	}

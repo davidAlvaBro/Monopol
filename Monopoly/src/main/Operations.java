@@ -1,28 +1,36 @@
 package main;
 
 public class Operations {
+	//Variabler der bruges til at finde spileren hvis tur det er
 	public static int turn = 0;
 	public static int tempTurn = turn;
+	//Variabler der styre hvor meget folk bevæger sig
 	public static int move = 0;
-	public static int round = 1;
-	public static boolean canRollDice = true;
-	public static boolean buying = false;
-	public static boolean idiots = false;
 	public static int tempMove = move;
+	public static int copyOfTempTurn = tempTurn;
+	//Runden
+	public static int round = 1;
+	//Styre om man kan slå flere gange, og derfor også om man kan slutte sin tur
+	public static boolean canRollDice = true;
+	//Bruges til at tjekke om folk køber
+	public static boolean buying = false;
+	//Hvis folk prøver at slette viser den cant go back now can you
+	public static boolean idiots = false;
+	//Boardet så man kan redigere på ting
 	private Board board;
-	public static int copyOfTempTurn;
+	//Tjekker om man slår så man kan komme ud af Jail, og tæller til tre
 	int triesToGetOutOfJail = 0;
 	
-	
+	//Construktor
 	public Operations(Board board){
 		this.board = board;
-		copyOfTempTurn = tempTurn;
-		
 	}
 	
+	//Det her sker hver gang MainAc ticker
 	public void tick(){
 		copyOfTempTurn = tempTurn;
 		
+		//Tjekker om det er en AI og sætter derfor isAITurn = true, tjekker først om spillerene er lavet
 		if(board.createdPlayers){
 			if(board.players[tempTurn] instanceof AI){
 				AI.isAITurn = true;
@@ -30,12 +38,15 @@ public class Operations {
 			}
 		}
 		
+		//Ruller med terningerne hvis de holdes nede
 		if(Dice.rollDice){
 			Dice.rollTheDice();
 		}
 		
+		//Ticker alt i bordet
 		board.tick();
 		
+		//Køber ting 
 		if(buying){
 			board.players[tempTurn].setPlayerCash(board.players[tempTurn].getPlayerCash()- board.fields[board.players[tempTurn].getPlayerPlace()].getPrice());
 			board.fields[board.players[tempTurn].getPlayerPlace()].setOwned(true);
@@ -65,6 +76,7 @@ public class Operations {
 			buying = false;
 		}
 		
+		//Bevæger spilleren hvis de har slået med terningen
 		if(tempMove != move){
 			if(board.players[tempTurn].inJail){
 				

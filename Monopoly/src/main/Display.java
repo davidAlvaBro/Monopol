@@ -44,6 +44,8 @@ public class Display {
 		
 		
 		g.setColor(Color.white);
+		
+		//Tegner bordet
 		for (int i = 0; i < 40; i++) {
 			if(i == 0){
 				g.drawRect(feltX, feltY, stanFelt * 2, stanFelt * 2);
@@ -285,6 +287,8 @@ public class Display {
 		feltX = MainAc.width/4;
 		feltY = 0;
 		
+		
+		//Tegner terninger
 		g.setColor(Color.cyan);
 		g.setFont(rolls);
 		g.drawRoundRect(MainAc.width/4 + 19*stanFelt/2, 5*stanFelt/2, stanFelt, stanFelt, 50, 50);
@@ -312,6 +316,7 @@ public class Display {
 				g.drawRect(playerX + k*stanFelt/5 - (peopleOnField[j] - 1)*stanFelt/4, playerY - stanFelt/4, stanFelt/5, stanFelt/5);
 			}
 		}
+		
 //		Draw Players
 		for (int j = 0; j < board.players.length; j++) {
 			// hvis der er mere end en på et felt skal de være forskudt 
@@ -319,21 +324,21 @@ public class Display {
 			g.setColor(board.players[j].getPlayerColor());
 			getFieldCorner(board.players[j].getPlayerPlace());
 			if(board.players[j].inJail){
-				g.fillRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4);	
+				g.fillRoundRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4, 10, 10);
 				g.setColor(Color.white);
-				g.drawRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4);
+				g.drawRoundRect(playerX + stanFelt, playerY + stanFelt, stanFelt/4, stanFelt/4, 10, 10);
 			}else{
-				g.fillRect(playerX, playerY, stanFelt/4, stanFelt/4);	
+				g.fillRoundRect(playerX, playerY, stanFelt/4, stanFelt/4, 10, 10);
 				g.setColor(Color.white);
-				g.drawRect(playerX, playerY, stanFelt/4, stanFelt/4);
+				g.drawRoundRect(playerX, playerY, stanFelt/4, stanFelt/4, 10, 10);
 			}
 			
 		}
-		
 		for (int j = 0; j < board.players.length; j++) {
 			peopleOnField[board.players[j].getPlayerPlace()]--;	
 		}
 		
+		//Tegner at vise felter og deres værdier 
 		if(board.shouldShowField()){
 			for (int j = 0; j < board.fields.length; j++) {
 				if(board.showFields[j]){

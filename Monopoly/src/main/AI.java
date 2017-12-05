@@ -255,6 +255,9 @@ public class AI extends Player{
 					if(mostIWannaBuyHouse >= randomValue){
 						ownedFields.get(propertyIWannaBuyHouseOn).setHouseAmounts(ownedFields.get(propertyIWannaBuyHouseOn).getHouseAmounts() + 1);
 						playerCash -= ownedFields.get(propertyIWannaBuyHouseOn).getPriceForHouse();
+
+						ownedFields.get(propertyIWannaBuyHouseOn).setPriceLandedOn((int) ((int) ownedFields.get(propertyIWannaBuyHouseOn).getStanPrice()*Math.pow(Field.houseFactor, ownedFields.get(propertyIWannaBuyHouseOn).getHouseAmounts())));
+						amountOfHouses++;
 						
 						functionAsAnAI();
 						
