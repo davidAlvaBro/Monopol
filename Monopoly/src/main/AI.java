@@ -228,7 +228,7 @@ public class AI extends Player{
 		for (int i = 0; i < ownedFields.size(); i++) {
 			if(ownedFields.get(i).getHouseAmounts() <= 4 && ownedFields.get(i).typeOfField == FieldProperties.NormalField){
 				houseIWannaBuy = (int) Math.sqrt((playerCash - ownedFields.get(i).getPriceForHouse())*playerCash/ownedFields.get(i).getPriceForHouse()+dangerousValue)*playerCash/(ownedFields.get(i).getPriceForHouse()+dangerousValue);
-				houseIWannaBuy = (int) (houseIWannaBuy * ownedFields.get(i).getStanPrice()*Math.pow(2, ownedFields.get(i).getHouseAmounts())/ownedFields.get(i).getPriceForHouse());
+				houseIWannaBuy = (int) (houseIWannaBuy * ownedFields.get(i).getStanPrice()*Math.pow(2, ownedFields.get(i).getPriceLandedOn())/ownedFields.get(i).getPriceForHouse());
 				
 				if(houseIWannaBuy >= mostIWannaBuyHouse){
 					mostIWannaBuyHouse = houseIWannaBuy;

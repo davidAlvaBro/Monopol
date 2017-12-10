@@ -13,11 +13,10 @@ public class Board {
 	public Field[] fields = new Field[fieldNames.length];
 	public Player[] players;
 	private Player[] tempPlayers;
-	public boolean createdPlayers = false;
 	private boolean createdAmountOfPlayers;
 	public boolean[] showFields = new boolean[fieldNames.length];
 	private String chance, communityChest;
-	public boolean landedOnChance = false, landedOnCommunityChest = false;
+	public boolean landedOnChance = false, landedOnCommunityChest = false, createdPlayers = false;
 	
 	public static int fieldSettingForSale;
 	// Things for tradeing 
@@ -80,7 +79,6 @@ public class Board {
 				players[i].tick();
 				
 				if(players[i].getPlayerValue() <= 0){
-					System.out.println("SHIIIIIT YOU DIDEDEDDED");
 					for (int j = 0; j < players[i].ownedFields.size(); j++) {
 						players[i].ownedFields.get(j).setHouseAmounts(0);
 						players[i].ownedFields.get(j).setPriceLandedOn(players[i].ownedFields.get(j).getStanPrice());
@@ -88,10 +86,6 @@ public class Board {
 						players[i].ownedFields.get(j).setOwnedBy("No one");
 						players[i].ownedFields.get(j).setOwned(false);
 						
-					}
-					
-					for (int j = 0; j < players.length; j++) {
-						System.out.println(j + " The player number " + players[j].getPlayerName());
 					}
 					
 					for (int j = 0; j < players.length; j++) {
@@ -110,10 +104,7 @@ public class Board {
 					}
 					
 					players = tempPlayers;
-					System.out.println("");
-					for (int j = 0; j < players.length; j++) {
-						System.out.println(j + " The player number " + players[j].getPlayerName());
-					}
+					
 
 					Player.amountOfPlayers--;
 					
